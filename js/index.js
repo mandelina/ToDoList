@@ -57,6 +57,22 @@ const paintTodos = () => {
     const checkboxElem = document.createElement("input");
     checkboxElem.setAttribute("type", "checkbox");
 
+    //isCompleted가 true이면 check되어있는 상태 렌더링
+    if (todo.isCompleted) {
+      checkboxElem.checked = true;
+    }
+
+    //체크박스 체크시 isCompleted: true로 변경
+    checkboxElem.addEventListener("change", (e) => {
+      if (e.currentTarget.checked) {
+        console.log("체크됨");
+        todo.isCompleted = true;
+      } else {
+        console.log("체크 안됨");
+        todo.isCompleted = false;
+      }
+    });
+
     todoItemElem.appendChild(checkboxElem); //li 구성 1.checkbox
     todoItemElem.appendChild(todoEle); //li 구성 2.label(할일입력)
     todoItemElem.appendChild(delBtn); //li 구성 3.삭제버튼
