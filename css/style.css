@@ -22,7 +22,7 @@ body {
   background-color: rgb(255, 255, 255);
   box-shadow: 10px 5px 5px rgb(196, 196, 196);
   font-family: "Mini_handwriting";
-  padding: 10px 20px;
+  padding: 35px 20px;
 }
 
 .wrapper h1 {
@@ -39,7 +39,8 @@ body {
 }
 
 .check {
-  display: inline-block;
+  text-decoration: line-through;
+  color: rgb(161, 161, 161);
 }
 
 .todo_input {
@@ -52,6 +53,7 @@ body {
 .txt {
   margin-left: 10px;
 }
+
 .delete_btn {
   width: 10px;
   display: inline;

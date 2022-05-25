@@ -2,7 +2,9 @@ const $input = document.querySelector(".todo_input"); //할일입력 $input박�
 const todoListElem = document.querySelector(".list"); //ul
 
 let todos = [];
+
 let id = 0;
+let Stor_ID = 0;
 
 // 현재 todo를 업데이트 하는 함수
 const setTodos = (newTodos) => {
@@ -57,21 +59,26 @@ const paintTodos = () => {
     const checkboxElem = document.createElement("input");
     checkboxElem.setAttribute("type", "checkbox");
 
-    //isCompleted가 true이면 check되어있는 상태 렌더링
-    if (todo.isCompleted) {
-      checkboxElem.checked = true;
-    }
+    //할일이 완료되면 선을 그어줄 li
 
     //체크박스 체크시 isCompleted: true로 변경
     checkboxElem.addEventListener("change", (e) => {
+      const $li = e.currentTarget.parentNode;
       if (e.currentTarget.checked) {
-        console.log("체크됨");
+        $li.classList.add("check");
         todo.isCompleted = true;
       } else {
         console.log("체크 안됨");
         todo.isCompleted = false;
+        $li.classList.remove("check");
       }
     });
+
+    //isCompleted가 true이면 check되어있는 상태 렌더링
+    if (todo.isCompleted) {
+      checkboxElem.checked = true;
+      todoItemElem.classList.add("check");
+    }
 
     todoItemElem.appendChild(checkboxElem); //li 구성 1.checkbox
     todoItemElem.appendChild(todoEle); //li 구성 2.label(할일입력)
@@ -90,4 +97,7 @@ const init = () => {
   });
 };
 
+paintTodos();
 init(); //index.js가 실행될때 호출
+
+const $lil = document.querySelector(".list");
