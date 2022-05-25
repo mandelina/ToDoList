@@ -1,29 +1,43 @@
 const $input = document.querySelector(".todo_input"); //할일입력 $input박스
 const todoListElem = document.querySelector(".list"); //ul
 
-let todos = [];
-
+let todos = []; // todo를 관리할 배열
+let local = JSON.parse(localStorage.getItem("todos")); //todos 배열이 들어있는 로컬 스토리지
 let id = 0;
 let Stor_ID = 0;
 
 // 현재 todo를 업데이트 하는 함수
 const setTodos = (newTodos) => {
   todos = newTodos;
+  console.log("todos");
+  console.log(todos);
+  localStorage.setItem("todos", JSON.stringify(todos)); //local스토리지에 배열을 통째로 넣고
+  local = JSON.parse(localStorage.getItem("todos")); // string을 잘라서 다시 array로 꺼낸다
+  console.log("local");
+  console.log(local);
 };
 
 // 현재 todo를 가져오는 함수
 const getAllTodos = () => {
-  return todos;
+  if (localStorage.length > 0) {
+    // 로컬스토리지에 한개 이상의 객체가 들어가면 그때부터 로컬스토리지 데이터 리턴
+    return local;
+  } else {
+    // 로컬스토리지에 아무것도 없으면 일단 빈 배열로 시작
+    return todos;
+  }
 };
 
 //todo를 추가하는 함수
 const appendTodos = (text) => {
   const newid = id++;
+
   const newTodos = getAllTodos().concat({
     id: newid,
     isCompleted: false,
     content: text,
   });
+
   setTodos(newTodos);
   paintTodos();
 };
@@ -97,7 +111,9 @@ const init = () => {
   });
 };
 
-paintTodos();
-init(); //index.js가 실행될때 호출
+//로컬스토리지에 저장된 값이 있으면 렌더링 해주고 시작
+if (localStorage.length > 0) {
+  paintTodos();
+}
 
-const $lil = document.querySelector(".list");
+init();

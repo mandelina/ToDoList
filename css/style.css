@@ -10,15 +10,13 @@ body {
   background-color: rgb(246, 240, 255);
   width: 100vw;
   height: 100vh;
-  /*display: flex;
-  justify-content: center;
-  align-items: center; */
 }
 
 .wrapper {
-  margin: 50px auto;
+  margin: 50px auto 0;
   border-radius: 10px;
   width: 450px;
+
   background-color: rgb(255, 255, 255);
   box-shadow: 10px 5px 5px rgb(196, 196, 196);
   font-family: "Mini_handwriting";
