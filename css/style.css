@@ -16,7 +16,8 @@ body {
   margin: 50px auto 0;
   border-radius: 10px;
   width: 450px;
-
+  overflow: scroll;
+  height: 600px;
   background-color: rgb(255, 255, 255);
   box-shadow: 10px 5px 5px rgb(196, 196, 196);
   font-family: "Mini_handwriting";
@@ -63,4 +64,15 @@ body {
 
 .todo_input:focus {
   outline: 2px solid rgb(230, 131, 222);
+}
+
+.btn {
+  margin: 20px 15px 20px 0;
+  background-color: rgb(132, 78, 168);
+  color: white;
+  font-size: 30px;
+  width: 80px;
+  padding: 5px;
+  border-radius: 10px;
+  float: right;
 }

@@ -89,10 +89,17 @@ const paintTodos = () => {
     });
 
     //isCompleted가 true이면 check되어있는 상태 렌더링
+    const $btn = document.querySelector(".btn");
     if (todo.isCompleted) {
       checkboxElem.checked = true;
       todoItemElem.classList.add("check");
     }
+
+    //clear 버튼 누를시 모두 삭제
+    $btn.addEventListener("click", (e) => {
+      localStorage.clear();
+      location.reload();
+    });
 
     todoItemElem.appendChild(checkboxElem); //li 구성 1.checkbox
     todoItemElem.appendChild(todoEle); //li 구성 2.label(할일입력)
