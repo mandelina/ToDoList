@@ -50,6 +50,52 @@ const deleteTodo = (todoId) => {
   paintTodos(); //다시 렌더링
 };
 
+//--------------------수정 관련 함수 --------------------------
+
+// 더블클릭시 할일 수정 함수
+const ondblclick = (e, todoId) => {
+  console.log(e.target); //li
+  console.log(e.target.children[1]); //label노드
+  const todoItemElem = e.target;
+  const todoEle = e.target; // li
+  const inputText = e.target.children[1].textContent; //lable의 글
+  const text = document.createElement("input");
+  text.value = inputText;
+  text.classList.add("editInput"); //수정시 영역 확장
+
+  todoItemElem.appendChild(text);
+
+  // //다른 영역 클릭시 수정 취소 함수
+  const onClickBody = (e) => {
+    if (e.target !== text) {
+      //현재 클릭한곳이 inputBox가 아니면
+      todoItemElem.removeChild(text);
+      document.body.removeEventListener("click", onClickBody);
+    }
+  };
+
+  document.body.addEventListener("click", onClickBody);
+
+  // 엔터키 이벤트
+  text.addEventListener("keypress", (e) => {
+    if (e.keyCode == 13) {
+      updateTodo(e.target.value, todoId);
+    }
+  });
+};
+
+//enter키를 친 후 저장하는 함수
+const updateTodo = (inputText, todoId) => {
+  console.log(inputText);
+  const newTodos = getAllTodos().map((todo) =>
+    todo.id === todoId ? { ...todo, content: inputText } : todo
+  ); // 수정할 id값만 내용을 바꾼다.
+  setTodos(newTodos);
+  paintTodos();
+};
+
+//----------------------------- 끝--------------------------
+
 //할일이 추가될때 렌더링해주는 함수
 const paintTodos = () => {
   todoListElem.innerHTML = null; //todoListElem 요소안의 html을 초가화
@@ -62,6 +108,9 @@ const paintTodos = () => {
     const todoEle = document.createElement("label");
     todoEle.classList.add("txt");
     todoEle.textContent = todo.content;
+
+    //할일수정  - 더블클릭시 수정
+    todoItemElem.addEventListener("dblclick", (e) => ondblclick(e, todo.id));
 
     // 삭제 버튼
     const delBtn = document.createElement("button");
