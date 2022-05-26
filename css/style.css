@@ -19,7 +19,7 @@ body {
   overflow: scroll;
   height: 600px;
   background-color: rgb(255, 255, 255);
-  box-shadow: 10px 5px 5px rgb(196, 196, 196);
+  box-shadow: 5px 5px 10px rgb(218, 218, 218);
   font-family: "Mini_handwriting";
   padding: 35px 20px;
 }
@@ -63,9 +63,8 @@ body {
 }
 
 .todo_input:focus {
-  outline: 2px solid rgb(230, 131, 222);
+  outline: 2px solid rgb(129, 64, 124);
 }
-
 .btn {
   margin: 20px 15px 20px 0;
   background-color: rgb(132, 78, 168);
@@ -75,4 +74,13 @@ body {
   padding: 5px;
   border-radius: 10px;
   float: right;
+}
+
+.wrapper::-webkit-scrollbar {
+  width: 4px;
+  height: 1px;
+}
+.wrapper::-webkit-scrollbar-thumb {
+  background-color: rgb(188, 158, 192);
+  border-radius: 50px;
 }
