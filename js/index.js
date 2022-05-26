@@ -81,10 +81,12 @@ const paintTodos = () => {
       if (e.currentTarget.checked) {
         $li.classList.add("check");
         todo.isCompleted = true;
+        setTodos(local); // local에 true 저장 (새로고침시 체크 유지되도록)
       } else {
         console.log("체크 안됨");
         todo.isCompleted = false;
         $li.classList.remove("check");
+        setTodos(local);
       }
     });
 
@@ -92,6 +94,7 @@ const paintTodos = () => {
     const $btn = document.querySelector(".btn");
     if (todo.isCompleted) {
       checkboxElem.checked = true;
+
       todoItemElem.classList.add("check");
     }
 
