@@ -1,10 +1,19 @@
 const $input = document.querySelector(".todo_input"); //할일입력 $input박스
 const todoListElem = document.querySelector(".list"); //ul
 
+//완료한일
+const comleteBtn = document.querySelector(".complete");
+
+//해야할일
+const todoBtn = document.querySelector(".todo");
+
+//모두보기
+const allBtn = document.querySelector(".all");
+
 let todos = []; // todo를 관리할 배열
 let local = JSON.parse(localStorage.getItem("todos")); //todos 배열이 들어있는 로컬 스토리지
-let id = 0;
-let Stor_ID = 0;
+
+//----------------------------------------------------------
 
 // 현재 todo를 업데이트 하는 함수
 const setTodos = (newTodos) => {
@@ -17,6 +26,8 @@ const setTodos = (newTodos) => {
   console.log(local);
 };
 
+//----------------------------------------------------------
+
 // 현재 todo를 가져오는 함수
 const getAllTodos = () => {
   if (localStorage.length > 0) {
@@ -28,9 +39,30 @@ const getAllTodos = () => {
   }
 };
 
+// 완료한 일을 가져오는 함수
+
+const getCompletedTodos = () => {
+  if (localStorage.length === 0) {
+    return todos;
+  } else {
+    return local.filter((todo) => todo.isCompleted);
+  }
+};
+
+// 할 일을 가져오는 함수
+const getActiveodos = () => {
+  if (localStorage.length === 0) {
+    return todos;
+  } else {
+    return local.filter((todo) => !todo.isCompleted);
+  }
+};
+
+//----------------------------------------------------------
+
 //todo를 추가하는 함수
 const appendTodos = (text) => {
-  const newid = id++;
+  let newid = localStorage.length > 0 ? local.length : 0;
 
   const newTodos = getAllTodos().concat({
     id: newid,
@@ -41,6 +73,8 @@ const appendTodos = (text) => {
   setTodos(newTodos);
   paintTodos();
 };
+
+//----------------------------------------------------------
 
 //todos를 삭제하는 함수
 const deleteTodo = (todoId) => {
@@ -94,7 +128,7 @@ const updateTodo = (inputText, todoId) => {
   paintTodos();
 };
 
-//----------------------------- 끝--------------------------
+//-------------------------------------------------------
 
 //할일이 추가될때 렌더링해주는 함수
 const paintTodos = () => {
@@ -140,15 +174,15 @@ const paintTodos = () => {
     });
 
     //isCompleted가 true이면 check되어있는 상태 렌더링
-    const $btn = document.querySelector(".btn");
     if (todo.isCompleted) {
       checkboxElem.checked = true;
 
       todoItemElem.classList.add("check");
     }
 
-    //clear 버튼 누를시 모두 삭제
-    $btn.addEventListener("click", (e) => {
+    //전체삭제
+    const Clearbtn = document.querySelector(".clear");
+    Clearbtn.addEventListener("click", (e) => {
       localStorage.clear();
       location.reload();
     });
@@ -161,6 +195,8 @@ const paintTodos = () => {
   });
 };
 
+//----------------------------------------------------------
+
 const init = () => {
   $input.addEventListener("keypress", (e) => {
     if (e.keyCode == 13) {
@@ -168,7 +204,57 @@ const init = () => {
       $input.value = ""; //추가했으면 입력창에 있는 값 지우기
     }
   });
+  comleteBtn.addEventListener("click", onClickShowTodo);
+  todoBtn.addEventListener("click", onClickShowTodo);
+  allBtn.addEventListener("click", onClickShowTodo);
 };
+
+//----------------------------------------------------------
+
+//button을 클릭했을때 상태를 알려줌
+const btnList = document.querySelector(".btn_Wrapper");
+
+const onClickShowTodo = (e) => {
+  const currBtn = e.target; //현재 클릭한 버튼
+  // console.log(currBtn.getAttribute("class").replace("btn", ""));
+  const curState = currBtn.getAttribute("class").replace("btn", "");
+
+  return paintTodoState(curState);
+};
+
+//----------------------------------------------------------
+//상태에 따른 랜더링
+
+const paintTodoState = (curState) => {
+  todoListElem.innerHTML = null;
+
+  switch (curState) {
+    case " all":
+      console.log("all");
+      const allTodos = getAllTodos();
+      allTodos.forEach((todo) => paintTodos(todo));
+      break;
+
+    case " todo":
+      console.log("active");
+      const activeTodos = getActiveodos();
+      console.log(activeTodos);
+      // activeTodos.forEach((todo) => paintTodos(todo));
+      break;
+
+    case " complete":
+      console.log("completed");
+      const completedTodos = getCompletedTodos();
+      console.log(completedTodos);
+      // completedTodos.forEach((todo) => paintTodos(todo));
+      break;
+
+    default:
+      break;
+  }
+};
+
+//----------------------------------------------------------
 
 //로컬스토리지에 저장된 값이 있으면 렌더링 해주고 시작
 if (localStorage.length > 0) {

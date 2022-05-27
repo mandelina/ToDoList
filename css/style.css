@@ -66,15 +66,24 @@ body {
 .todo_input:focus {
   outline: 2px solid rgb(129, 64, 124);
 }
+
+.btn_Wrapper {
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  margin-top: -20px;
+  font-family: "Mini_handwriting";
+}
+
 .btn {
-  margin: 20px 15px 20px 0;
+  margin: 0 10px;
+  box-shadow: 1px 1px 5px rgb(146, 146, 146);
   background-color: rgb(132, 78, 168);
   color: white;
-  font-size: 30px;
+  font-size: 20px;
   width: 80px;
-  padding: 5px;
-  border-radius: 10px;
-  float: right;
+  padding: 5px 0;
+  border-radius: 40px;
 }
 
 .editInput {

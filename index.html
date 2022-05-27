@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./css/reset.css" />
     <link rel="stylesheet" href="./css/style.css" />
-    <title>오늘 할일은 뭘까요~?</title>
+    <title>TODOLIST</title>
   </head>
   <body>
     <article class="wrapper">
-      <h1>ToDo List</h1>
+      <h1>To Do List</h1>
       <div class="todo_item">
         <input
           type="text"
@@ -19,14 +19,13 @@
         />
       </div>
       <ul class="list"></ul>
-
-      <div class="btn_Wrapper">
-        <button class="btn">All</button>
-        <button class="btn">해야할 일</button>
-        <button class="btn">완료한 일</button>
-        <button class="btn clear">전체삭제</button>
-      </div>
     </article>
+    <div class="btn_Wrapper">
+      <button class="btn all">모두보기</button>
+      <button class="btn todo">해야할 일</button>
+      <button class="btn complete">완료한 일</button>
+      <button class="btn clear">전체삭제</button>
+    </div>
   </body>
   <script src="./js/index.js"></script>
 </html>
