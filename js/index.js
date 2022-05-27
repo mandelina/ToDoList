@@ -129,6 +129,74 @@ const updateTodo = (inputText, todoId) => {
 };
 
 //-------------------------------------------------------
+//상태에 따른 렌더링 함수
+const paintTodo = (todoState) => {
+  todoState.forEach((todo) => {
+    // 추가할 li
+    const todoItemElem = document.createElement("li");
+
+    // 할일 text
+    const todoEle = document.createElement("label");
+    todoEle.classList.add("txt");
+    todoEle.textContent = todo.content;
+
+    //할일수정  - 더블클릭시 수정
+    todoItemElem.addEventListener("dblclick", (e) => ondblclick(e, todo.id));
+
+    // 삭제 버튼
+    const delBtn = document.createElement("button");
+    delBtn.classList.add("delete_btn");
+    delBtn.innerHTML = "X";
+    delBtn.addEventListener("click", () => deleteTodo(todo.id));
+
+    //----------------------
+
+    // 체크박스
+    const checkboxElem = document.createElement("input");
+    checkboxElem.setAttribute("type", "checkbox");
+
+    //할일이 완료되면 선을 그어줄 li
+
+    //체크박스 체크시 isCompleted: true로 변경
+    checkboxElem.addEventListener("change", (e) => {
+      const $li = e.currentTarget.parentNode;
+      if (e.currentTarget.checked) {
+        console.log("체크");
+        $li.classList.add("check");
+        todo.isCompleted = true;
+        setTodos(local); // local에 true 저장 (새로고침시 체크 유지되도록)
+        paintTodos();
+      } else {
+        console.log("체크 안됨");
+        todo.isCompleted = false;
+        $li.classList.remove("check");
+        setTodos(local);
+        paintTodos();
+      }
+    });
+
+    //isCompleted가 true이면 check되어있는 상태 렌더링
+    if (todo.isCompleted) {
+      checkboxElem.checked = true;
+      todoItemElem.classList.add("check");
+    }
+    //-----------------------
+    //전체삭제
+    const Clearbtn = document.querySelector(".clear");
+    Clearbtn.addEventListener("click", (e) => {
+      localStorage.clear();
+      location.reload();
+    });
+
+    todoItemElem.appendChild(checkboxElem); //li 구성 1.checkbox
+    todoItemElem.appendChild(todoEle); //li 구성 2.label(할일입력)
+    todoItemElem.appendChild(delBtn); //li 구성 3.삭제버튼
+
+    todoListElem.appendChild(todoItemElem); // 하나의 li을 ul에 추가
+  });
+};
+
+//-------------------------------------------------------
 
 //할일이 추가될때 렌더링해주는 함수
 const paintTodos = () => {
@@ -152,6 +220,8 @@ const paintTodos = () => {
     delBtn.innerHTML = "X";
     delBtn.addEventListener("click", () => deleteTodo(todo.id));
 
+    //----------------------
+
     // 체크박스
     const checkboxElem = document.createElement("input");
     checkboxElem.setAttribute("type", "checkbox");
@@ -162,24 +232,26 @@ const paintTodos = () => {
     checkboxElem.addEventListener("change", (e) => {
       const $li = e.currentTarget.parentNode;
       if (e.currentTarget.checked) {
+        console.log("체크");
         $li.classList.add("check");
         todo.isCompleted = true;
         setTodos(local); // local에 true 저장 (새로고침시 체크 유지되도록)
+        paintTodos();
       } else {
         console.log("체크 안됨");
         todo.isCompleted = false;
         $li.classList.remove("check");
         setTodos(local);
+        paintTodos();
       }
     });
 
     //isCompleted가 true이면 check되어있는 상태 렌더링
     if (todo.isCompleted) {
       checkboxElem.checked = true;
-
       todoItemElem.classList.add("check");
     }
-
+    //-----------------------
     //전체삭제
     const Clearbtn = document.querySelector(".clear");
     Clearbtn.addEventListener("click", (e) => {
@@ -232,21 +304,20 @@ const paintTodoState = (curState) => {
     case " all":
       console.log("all");
       const allTodos = getAllTodos();
-      allTodos.forEach((todo) => paintTodos(todo));
+      paintTodos();
       break;
 
     case " todo":
       console.log("active");
       const activeTodos = getActiveodos();
-      console.log(activeTodos);
-      // activeTodos.forEach((todo) => paintTodos(todo));
+      paintTodo(activeTodos);
+
       break;
 
     case " complete":
       console.log("completed");
       const completedTodos = getCompletedTodos();
-      console.log(completedTodos);
-      // completedTodos.forEach((todo) => paintTodos(todo));
+      paintTodo(completedTodos);
       break;
 
     default:
