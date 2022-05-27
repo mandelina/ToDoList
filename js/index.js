@@ -272,8 +272,12 @@ const paintTodos = () => {
 const init = () => {
   $input.addEventListener("keypress", (e) => {
     if (e.keyCode == 13) {
-      appendTodos(e.target.value); //현재입력된 값을 투두리스트에 추가한다
-      $input.value = ""; //추가했으면 입력창에 있는 값 지우기
+      if (e.target.value !== "") {
+        appendTodos(e.target.value); //현재입력된 값을 투두리스트에 추가한다
+        $input.value = ""; //추가했으면 입력창에 있는 값 지우기
+      } else {
+        alert("해야 할 일을 입력해주세요!");
+      }
     }
   });
   comleteBtn.addEventListener("click", onClickShowTodo);
