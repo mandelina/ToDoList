@@ -51,8 +51,10 @@ body {
   color: rgb(161, 161, 161);
 }
 
+.todo_item {
+  text-align: center;
+}
 .todo_input {
-  margin-left: 40px;
   border: 2px solid rgb(212, 176, 209);
   border-radius: 7px;
   width: 80%;
@@ -122,10 +124,6 @@ body {
   .wrapper {
     width: 290px;
     height: 500px;
-  }
-
-  .todo_input {
-    margin-left: 25px;
   }
 
   .btn {
