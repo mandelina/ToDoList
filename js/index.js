@@ -3,10 +3,8 @@ const todoListElem = document.querySelector(".list"); //ul
 
 //완료한일
 const comleteBtn = document.querySelector(".complete");
-
 //해야할일
 const todoBtn = document.querySelector(".todo");
-
 //모두보기
 const allBtn = document.querySelector(".all");
 
@@ -18,12 +16,8 @@ let local = JSON.parse(localStorage.getItem("todos")); //todos 배열이 들어�
 // 현재 todo를 업데이트 하는 함수
 const setTodos = (newTodos) => {
   todos = newTodos;
-  console.log("todos");
-  console.log(todos);
   localStorage.setItem("todos", JSON.stringify(todos)); //local스토리지에 배열을 통째로 넣고
   local = JSON.parse(localStorage.getItem("todos")); // string을 잘라서 다시 array로 꺼낸다
-  console.log("local");
-  console.log(local);
 };
 
 //----------------------------------------------------------
@@ -78,7 +72,6 @@ const appendTodos = (text) => {
 
 //todos를 삭제하는 함수
 const deleteTodo = (todoId) => {
-  console.log("click!");
   const newTodos = getAllTodos().filter((todo) => todo.id !== todoId); //id가 같은 todo를 제외하고 새로운 todo에 넣어줌
   setTodos(newTodos);
   paintTodos(); //다시 렌더링
@@ -88,8 +81,6 @@ const deleteTodo = (todoId) => {
 
 // 더블클릭시 할일 수정 함수
 const ondblclick = (e, todoId) => {
-  console.log(e.target); //li
-  console.log(e.target.children[1]); //label노드
   const todoItemElem = e.target;
   const todoEle = e.target; // li
   const inputText = e.target.children[1].textContent; //lable의 글
@@ -120,7 +111,6 @@ const ondblclick = (e, todoId) => {
 
 //enter키를 친 후 저장하는 함수
 const updateTodo = (inputText, todoId) => {
-  console.log(inputText);
   const newTodos = getAllTodos().map((todo) =>
     todo.id === todoId ? { ...todo, content: inputText } : todo
   ); // 수정할 id값만 내용을 바꾼다.
@@ -161,13 +151,11 @@ const paintTodo = (todoState) => {
     checkboxElem.addEventListener("change", (e) => {
       const $li = e.currentTarget.parentNode;
       if (e.currentTarget.checked) {
-        console.log("체크");
         $li.classList.add("check");
         todo.isCompleted = true;
         setTodos(local); // local에 true 저장 (새로고침시 체크 유지되도록)
         paintTodos();
       } else {
-        console.log("체크 안됨");
         todo.isCompleted = false;
         $li.classList.remove("check");
         setTodos(local);
@@ -191,7 +179,6 @@ const paintTodo = (todoState) => {
     todoItemElem.appendChild(checkboxElem); //li 구성 1.checkbox
     todoItemElem.appendChild(todoEle); //li 구성 2.label(할일입력)
     todoItemElem.appendChild(delBtn); //li 구성 3.삭제버튼
-
     todoListElem.appendChild(todoItemElem); // 하나의 li을 ul에 추가
   });
 };
@@ -232,13 +219,11 @@ const paintTodos = () => {
     checkboxElem.addEventListener("change", (e) => {
       const $li = e.currentTarget.parentNode;
       if (e.currentTarget.checked) {
-        console.log("체크");
         $li.classList.add("check");
         todo.isCompleted = true;
         setTodos(local); // local에 true 저장 (새로고침시 체크 유지되도록)
         paintTodos();
       } else {
-        console.log("체크 안됨");
         todo.isCompleted = false;
         $li.classList.remove("check");
         setTodos(local);
@@ -292,7 +277,6 @@ const btnList = document.querySelector(".btn_Wrapper");
 
 const onClickShowTodo = (e) => {
   const currBtn = e.target; //현재 클릭한 버튼
-  // console.log(currBtn.getAttribute("class").replace("btn", ""));
   const curState = currBtn.getAttribute("class").replace("btn", "");
 
   return paintTodoState(curState);
@@ -306,20 +290,16 @@ const paintTodoState = (curState) => {
 
   switch (curState) {
     case " all":
-      console.log("all");
       const allTodos = getAllTodos();
       paintTodos();
       break;
 
     case " todo":
-      console.log("active");
       const activeTodos = getActiveodos();
       paintTodo(activeTodos);
-
       break;
 
     case " complete":
-      console.log("completed");
       const completedTodos = getCompletedTodos();
       paintTodo(completedTodos);
       break;
@@ -342,16 +322,18 @@ init();
 //시간 및 날짜설정
 const TODAY = document.querySelector(".day");
 const TODAY_TIME = document.querySelector(".time");
+
 // 날짜
 const date = new Date();
 const year = date.getFullYear();
-const month = ('0' + (date.getMonth() + 1)).slice(-2);
-const day = ('0' + date.getDay()).slice(-2);
-const dateStr = year + '-' + month + '-' + day; 
+const month = ("0" + (date.getMonth() + 1)).slice(-2);
+const day = ("0" + date.getDay()).slice(-2);
+const dateStr = year + "-" + month + "-" + day;
+
 // 시간
-const hours = ('0' + date.getHours()).slice(-2);
-const minutes = ('0' + date.getMinutes()).slice(-2);
-const seconds = ('0' + date.getSeconds()).slice(-2);
-const timeStr = hours + ':' + minutes  
+const hours = ("0" + date.getHours()).slice(-2);
+const minutes = ("0" + date.getMinutes()).slice(-2);
+const seconds = ("0" + date.getSeconds()).slice(-2);
+const timeStr = hours + ":" + minutes;
 TODAY.textContent = dateStr;
 TODAY_TIME.textContent = timeStr;
