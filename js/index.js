@@ -82,7 +82,6 @@ const deleteTodo = (todoId) => {
 // 더블클릭시 할일 수정 함수
 const ondblclick = (e, todoId) => {
   const todoItemElem = e.target;
-  const todoEle = e.target; // li
   const inputText = e.target.children[1].textContent; //lable의 글
   const text = document.createElement("input");
   text.value = inputText;
@@ -324,16 +323,20 @@ const TODAY = document.querySelector(".day");
 const TODAY_TIME = document.querySelector(".time");
 
 // 날짜
-const date = new Date();
-const year = date.getFullYear();
-const month = ("0" + (date.getMonth() + 1)).slice(-2);
-const day = ("0" + date.getDay()).slice(-2);
-const dateStr = year + "-" + month + "-" + day;
+
+let today = new Date();
+
+let year = today.getFullYear(); // 년도
+let month = today.getMonth() + 1; // 월
+let date = today.getDate(); // 날짜
+let day = today.getDay(); // 요일
+const dateStr = year + "/" + month + "/" + date;
 
 // 시간
-const hours = ("0" + date.getHours()).slice(-2);
-const minutes = ("0" + date.getMinutes()).slice(-2);
-const seconds = ("0" + date.getSeconds()).slice(-2);
+const hours = ("0" + today.getHours()).slice(-2);
+const minutes = ("0" + today.getMinutes()).slice(-2);
+const seconds = ("0" + today.getSeconds()).slice(-2);
 const timeStr = hours + ":" + minutes;
+
 TODAY.textContent = dateStr;
 TODAY_TIME.textContent = timeStr;
