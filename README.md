@@ -49,9 +49,12 @@
 
 <br>
 
-- ## v2.1.0
-      - 같은 동작을 `React`와 `TypeScript`를 사용하여 구현해보기
-      - 레포 : https://github.com/mandelina/ToDoList_TypeScript
+- ## v2.0.0
+
+  - 같은 동작을 `React`와 `TypeScript`를 사용하여 구현해보기
+
+  - 레포 : https://github.com/mandelina/ToDoList_TypeScript
+
   <br>
 
 # 💻 프로젝트를 통해 배운점
